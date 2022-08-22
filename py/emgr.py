@@ -126,8 +126,11 @@ __license__ = "BSD 2-Clause"
 ODE = lambda f, g, t, x0, u, p: ssp2(f, g, t, x0, u, p)  # Preset default integrator
 
 
-def emgr(f, g=None, s=None, t=None, w=None, pr=0, nf=0, ut="i", us=0.0, xs=0.0, um=1.0, xm=1.0, dp=np.dot):
+def emgr(f, g=None, s=None, t=None, w=None, pr=0, nf=0, ut="i", us=0.0, xs=0.0, um=1.0, xm=1.0, dp=np.dot, ode=None):
     """ Compute empirical system Gramian matrix """
+
+    if ode is not None:
+        ODE = ode
 
     # Version Info
     if f == "version":
@@ -379,7 +382,7 @@ def emgr(f, g=None, s=None, t=None, w=None, pr=0, nf=0, ut="i", us=0.0, xs=0.0, 
                 for n in range(nTotalStates):
                     sPerturb = mStateScales[n, d]
                     if sPerturb != 0.0:
-                        vUnit = np.zeros((nTotalStates, 1))
+                        vUnit = np.zeros(nTotalStates)
                         vUnit[n] = sPerturb
                         vInit = vSteadyState + vUnit[:nStates]
                         vParamInit = np.copy(vParam)
