@@ -158,7 +158,7 @@ def emgr(f, g=None, s=None, t=None, w=None, pr=0, nf=0, ut="i", us=0.0, xs=0.0, 
     # Time Discretization
     tStep = t[0]                           # Time-step width
     tFinal = t[1]                          # Time horizon
-    nSteps = int(math.floor(tFinal / tStep) + 1)  # Number of time-steps
+    nSteps = int(math.floor(tFinal * (1 / tStep)) + 1)  # Number of time-steps
 
     # Gramian Type
     gramianType = w[0].lower()
